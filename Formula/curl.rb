@@ -9,9 +9,15 @@
 #
 class Curl < Formula
   desc "Get a file from an HTTP, HTTPS or FTP server w/http3 support using quiche"
-  homepage "https://curl.haxx.se/"
+  homepage "https://curl.se"
   url "https://curl.se/download/curl-7.76.0.tar.bz2"
   sha256 "e29bfe3633701590d75b0071bbb649ee5ca4ca73f00649268bd389639531c49a"
+  license "curl"
+
+  livecheck do
+    url "https://curl.se/download/"
+    regex(/href=.*?curl[._-]v?(.*?)\.t/i)
+  end
 
   head do
     url "https://github.com/curl/curl.git"
@@ -24,9 +30,21 @@ class Curl < Formula
   keg_only :provided_by_macos
 
   depends_on "pkg-config" => :build
-  uses_from_macos "openssl"
+  depends_on "brotli"
+  depends_on "libidn2"
+  depends_on "libmetalink"
+  depends_on "libssh2"
+  depends_on "nghttp2"
+  depends_on "openldap"
+  depends_on "openssl@1.1"
+  depends_on "rtmpdump"
+  depends_on "zstd"
 
-  depends_on "rust" => ["1.39.0", :build]
+  uses_from_macos "krb5"
+  uses_from_macos "zlib"
+
+  # quiche
+  depends_on "rust" => ["1.50.0", :build]
   depends_on "cmake" => :build
 
   # http2
@@ -62,10 +80,25 @@ class Curl < Formula
       --with-secure-transport
       --without-ca-bundle
       --without-ca-path
+      --with-ca-fallback
+      --with-libidn2
+      --with-libmetalink
+      --with-librtmp
+      --with-libssh2
+      --without-libpsl
+      --with-ssl=#{Formula["openssl@1.1"].opt_prefix}
       --with-ssl=#{pwd}/quiche/deps/boringssl/src
       --with-quiche=#{pwd}/quiche/target/release
       --enable-alt-svc
     ]
+
+    on_macos do
+      args << "--with-gssapi"
+    end
+
+    on_linux do
+      args << "--with-gssapi=#{Formula["krb5"].opt_prefix}"
+    end
 
     system "./configure", *args
     system "make", "install"
