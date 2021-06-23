@@ -85,11 +85,11 @@ class Curl < Formula
       --with-librtmp
       --with-libssh2
       --without-libpsl
-      --with-openssl=#{Formula["openssl@1.1"].opt_prefix}
       --with-openssl=#{pwd}/quiche/deps/boringssl/src
       --with-quiche=#{pwd}/quiche/target/release
       --enable-alt-svc
     ]
+      # --with-openssl=#{Formula["openssl@1.1"].opt_prefix}
 
     on_macos do
       args << "--with-gssapi"
@@ -99,8 +99,8 @@ class Curl < Formula
       args << "--with-gssapi=#{Formula["krb5"].opt_prefix}"
     end
 
-    ENV.prepend "LDFLAGS", "-L#{Formula["openssl@1.1"].opt_lib}"
-    ENV.prepend "CPPFLAGS", "-I#{Formula["openssl@1.1"].opt_include}"
+    # ENV.prepend "LDFLAGS", "-L#{Formula["openssl@1.1"].opt_lib}"
+    # ENV.prepend "CPPFLAGS", "-I#{Formula["openssl@1.1"].opt_include}"
 
     system "./configure", *args
     system "make", "install"
