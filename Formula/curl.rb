@@ -61,15 +61,16 @@ class Curl < Formula
     # build quiche
     cd "quiche" do
       # Build static libs only
-      inreplace "Cargo.toml", /^crate-type = .*/, "crate-type = [\"staticlib\"]"
+      inreplace "quiche/Cargo.toml", /^crate-type = .*/, "crate-type = [\"staticlib\"]"
 
       system "cargo", "build",
+                      "--package quiche",
                       "--release",
-                      "--features", "ffi,pkg-config-meta,qlog"
+                      "--features=ffi,pkg-config-meta,qlog"
 
-      mkdir_p "deps/boringssl/src/lib"
-      cp Dir.glob("target/release/build/*/out/build/libcrypto.a"), "deps/boringssl/src/lib"
-      cp Dir.glob("target/release/build/*/out/build/libssl.a"), "deps/boringssl/src/lib"
+      mkdir_p "quiche/deps/boringssl/src/lib"
+      cp Dir.glob("target/release/build/*/out/build/libcrypto.a"), "quiche/deps/boringssl/src/lib"
+      cp Dir.glob("target/release/build/*/out/build/libssl.a"), "quiche/deps/boringssl/src/lib"
     end
 
     args = %W[
@@ -85,7 +86,7 @@ class Curl < Formula
       --with-librtmp
       --with-libssh2
       --without-libpsl
-      --with-openssl=#{pwd}/quiche/deps/boringssl/src
+      --with-openssl=#{pwd}/quiche/quiche/deps/boringssl/src
       --with-quiche=#{pwd}/quiche/target/release
       --enable-alt-svc
     ]
