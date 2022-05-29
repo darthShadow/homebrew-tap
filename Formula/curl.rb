@@ -11,11 +11,11 @@
 class Curl < Formula
   desc "Get a file from an HTTP, HTTPS or FTP server with HTTP/3 support using quiche"
   homepage "https://curl.se"
-  url "https://curl.se/download/curl-7.81.0.tar.bz2"
-  mirror "https://github.com/curl/curl/releases/download/curl-7_80_0/curl-7.81.0.tar.bz2"
-  mirror "http://fresh-center.net/linux/www/curl-7.81.0.tar.bz2"
-  mirror "http://fresh-center.net/linux/www/legacy/curl-7.81.0.tar.bz2"
-  sha256 "1e7a38d7018ec060f1f16df839854f0889e94e122c4cfa5d3a37c2dc56f1e258"
+  url "https://curl.se/download/curl-7.83.1.tar.bz2"
+  mirror "https://github.com/curl/curl/releases/download/curl-7_83_1/curl-7.83.1.tar.bz2"
+  mirror "http://fresh-center.net/linux/www/curl-7.83.1.tar.bz2"
+  mirror "http://fresh-center.net/linux/www/legacy/curl-7.83.1.tar.bz2"
+  sha256 "f539a36fb44a8260ec5d977e4e0dbdd2eee29ed90fcedaa9bc3c9f78a113bff0"
   license "curl"
 
   livecheck do
@@ -84,6 +84,8 @@ class Curl < Formula
       --disable-silent-rules
       --prefix=#{prefix}
       --with-ssl=#{quiche}/deps/boringssl/src
+      --without-ca-bundle
+      --without-ca-path
       --with-ca-fallback
       --with-secure-transport
       --with-default-ssl-backend=openssl
@@ -104,7 +106,7 @@ class Curl < Formula
     system "./configure", *args
     system "make", "install"
     system "make", "install", "-C", "scripts"
-    libexec.install "lib/mk-ca-bundle.pl"
+    libexec.install "scripts/mk-ca-bundle.pl"
   end
 
   test do
