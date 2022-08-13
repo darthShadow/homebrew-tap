@@ -54,7 +54,7 @@ class Curl < Formula
   uses_from_macos "zlib"
 
   resource "quiche" do
-    url "https://github.com/cloudflare/quiche.git", revision: "4d411c22413835f2d57f993d1c90c07813f803cd"
+    url "https://github.com/cloudflare/quiche.git", branch: "master"
   end
 
   def install
