@@ -1,8 +1,8 @@
 cask "prey" do
-  version "1.10.11"
-  sha256 "8aed7760edbcceb306a5fba2d4646d8d52c0955c7931565796d352f2934edc4f"
+  version "1.11.8"
+  sha256 "88ef2bec6e85e2228acd60add0820e1ef357d1c14363cc8f8427b73fc9cf4175"
 
-  url "https://downloads.preyproject.com/prey-client-releases/node-client/#{version}/prey-mac-#{version}-x64.pkg"
+  url "https://downloads.preyproject.com/prey-client-releases/node-client/#{version}/prey-mac-#{version}-arm64.pkg"
   name "Prey"
   desc "Anti-theft, data security, and management platform"
   homepage "https://www.preyproject.com/"
@@ -11,7 +11,7 @@ cask "prey" do
     url "https://github.com/prey/prey-node-client"
   end
 
-  pkg "prey-mac-#{version}-x64.pkg"
+  pkg "prey-mac-#{version}-arm64.pkg"
 
   preflight do
     ENV["API_KEY"] = ENV.fetch("HOMEBREW_PREY_SETUP_API_KEY", nil)

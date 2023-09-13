@@ -1,21 +1,24 @@
 #
 # Homebrew Formula for curl + quiche
-# Based on https://github.com/Homebrew/homebrew-core/blob/HEAD/Formula/curl.rb
+# Based on https://github.com/Homebrew/homebrew-core/blob/master/Formula/c/curl.rb
 #
 # brew install -s <url of curl.rb>
 #
-# You can add --HEAD if you want to build curl from git master (recommended)
+# You can add --HEAD if you want to build curl from git master
+#
+# If you don't want to be auto-upgraded by `brew upgrade`, run
+# `brew pin curl`.
 #
 # For more information, see https://developers.cloudflare.com/http3/tutorials/curl-brew
 #
 class Curl < Formula
   desc "Get a file from an HTTP, HTTPS or FTP server with HTTP/3 support using quiche"
   homepage "https://curl.se"
-  url "https://curl.se/download/curl-7.88.1.tar.bz2"
-  mirror "https://github.com/curl/curl/releases/download/curl-7_88_1/curl-7.88.1.tar.bz2"
-  mirror "http://fresh-center.net/linux/www/curl-7.88.1.tar.bz2"
-  mirror "http://fresh-center.net/linux/www/legacy/curl-7.88.1.tar.bz2"
-  sha256 "8224b45cce12abde039c12dc0711b7ea85b104b9ad534d6e4c5b4e188a61c907"
+  url "https://curl.se/download/curl-8.2.1.tar.bz2"
+  mirror "https://github.com/curl/curl/releases/download/curl-8_2_1/curl-8.2.1.tar.bz2"
+  mirror "http://fresh-center.net/linux/www/curl-8.2.1.tar.bz2"
+  mirror "http://fresh-center.net/linux/www/legacy/curl-8.2.1.tar.bz2"
+  sha256 "0f1e31ebe336c09ec66381f1532f8350e466e1d02ffe10c4ac44a867f1b9d343"
   license "curl"
 
   livecheck do
@@ -36,10 +39,8 @@ class Curl < Formula
   depends_on "pkg-config" => :build
   depends_on "brotli"
   depends_on "libidn2"
-  depends_on "libmetalink"
   depends_on "libssh2"
   depends_on "openldap"
-  depends_on "openssl@1.1"
   depends_on "rtmpdump"
   depends_on "zstd"
 
